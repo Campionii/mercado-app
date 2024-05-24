@@ -13,5 +13,5 @@
     "**/*.tsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts"
-, "app/(tabs)/index.js", "app/(tabs)/perfil.jsx"  ]
+, "app/(tabs)/Index.jsx", "app/(tabs)/perfil.jsx", "app/pages/bemvindo.js", "app/ProductItem.js", "app/(tabs)/carrinho.tsx", "app/app.jsx"  ]
 }

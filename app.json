@@ -9,15 +9,22 @@
     "splash": {
       "image": "./assets/images/telinha-inicial-carregando.png",
       "resizeMode": "contain",
-      "backgroundColor": "#f0000"
+      "backgroundColor": "#f00000"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "Nós usamos sua localização para mostrar a sua posição no mapa e sugerir lojas próximas."
+      }
     },
     "android": {
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION"
+      ],
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/Logo.png",
-        "backgroundColor": "#00000"
+        "backgroundColor": "#000000"
       }
     },
     "web": {
@@ -30,6 +37,11 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    
+      "compilerOptions": {
+        "resolveJsonModule": true,
+        "esModuleInterop": true
+      }
     }
-  }
 }
