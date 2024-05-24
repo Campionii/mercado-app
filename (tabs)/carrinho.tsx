@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TextInput, Button, Image, ScrollView, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { StyleSheet, View, Text, TextInput, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 interface Product {
   id: number;
@@ -37,34 +37,7 @@ const ShoppingCartApp: React.FC = () => {
     navigation.goBack();
   };
 
-  const handleAddToCart = (product: Product) => {
-    const existingItem = cart.find(item => item.product.id === product.id);
-    if (existingItem) {
-      const updatedCart = cart.map(item => {
-        if (item.product.id === product.id) {
-          return { ...item, quantity: item.quantity + 1 };
-        }
-        return item;
-      });
-      setCart(updatedCart);
-    } else {
-      setCart([...cart, { product, quantity: 1 }]);
-    }
-  };
-
-  const handleRemoveFromCart = (productId: number) => {
-    const updatedCart = cart
-      .map(item => {
-        if (item.product.id === productId) {
-          return { ...item, quantity: item.quantity - 1 };
-        }
-        return item;
-      })
-      .filter(item => item.quantity > 0);
-    setCart(updatedCart);
-  };
-
-  const toggleCartVisibility = () => {
+  const handleToggleCartVisibility = () => {
     setCartVisible(!cartVisible);
   };
 
@@ -72,8 +45,31 @@ const ShoppingCartApp: React.FC = () => {
     console.log('Finalizar Compra');
   };
 
-  const handleCalculatePurchase = () => {
-    console.log('Calcular Compra');
+  const handleRemoveFromCart = (productId: number) => {
+    setCart(prevCart => {
+      const updatedCart = prevCart
+        .map(item => item.product.id === productId
+          ? { ...item, quantity: item.quantity - 1 }
+          : item
+        )
+        .filter(item => item.quantity > 0);
+      return updatedCart;
+    });
+  };
+
+  const handleAddToCart = (product: Product) => {
+    setCart(prevCart => {
+      const productInCart = prevCart.find(item => item.product.id === product.id);
+      if (productInCart) {
+        return prevCart.map(item =>
+          item.product.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+      } else {
+        return [...prevCart, { product, quantity: 1 }];
+      }
+    });
   };
 
   return (
@@ -87,6 +83,10 @@ const ShoppingCartApp: React.FC = () => {
           source={require('@/assets/images/calculadora-davo.png')}
           style={styles.logo}
         />
+        <Text style={styles.total}>
+          Total: R$
+          {cart.reduce((acc, item) => acc + item.product.price * item.quantity, 0).toFixed(2)}
+        </Text>
       </View>
       <TextInput
         style={styles.input}
@@ -139,28 +139,19 @@ const ShoppingCartApp: React.FC = () => {
                 </View>
               </View>
             ))}
+
           </ScrollView>
-          <Text style={styles.total}>
-            Total: R$
-            {cart.reduce((acc, item) => acc + item.product.price * item.quantity, 0).toFixed(2)}
-          </Text>
         </View>
       )}
-
-      <TouchableOpacity style={styles.toggleButton} onPress
-        ={() => toggleCartVisibility()}>
+      <TouchableOpacity style={styles.toggleButton} onPress={handleToggleCartVisibility}>
         <Text style={styles.toggleButtonText}>
           {cartVisible ? 'Esconder Carrinho' : 'Mostrar Carrinho'}
         </Text>
       </TouchableOpacity>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.finalizar} onPress={handleFinalizePurchase}>
-          <Text style={styles.buttonText}>Finalizar Compra</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.calcular} onPress={handleCalculatePurchase}>
-          <Text style={styles.buttonText}>Calcular Compra</Text>
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity style={styles.finalizar} onPress={handleFinalizePurchase}>
+        <Text style={styles.buttonText}>Finalizar Compra</Text>
+      </TouchableOpacity>
+
     </View>
   );
 };
@@ -217,11 +208,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#1d9d00',
     padding: 7,
     borderRadius: 3,
-  },
-  calcular: {
-    backgroundColor: '#FF0000',
-    padding: 7,
-    borderRadius: 3,
+    marginTop: 20,
+    alignItems: 'center',
   },
   addButtonText: {
     color: '#fff',
@@ -256,7 +244,7 @@ const styles = StyleSheet.create({
     width: 30,
     textAlign: 'center',
     lineHeight: 22,
-    
+
   },
 
   menos: {
@@ -270,7 +258,7 @@ const styles = StyleSheet.create({
     width: 30,
     textAlign: 'center',
     lineHeight: 22,
-    
+
   },
 
   quantity: {
@@ -281,6 +269,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginHorizontal: 10,
+    marginTop: 10,
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -293,10 +282,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   toggleButton: {
-    backgroundColor: '#1d9d00',
+    backgroundColor: '#690000',
     alignItems: 'center',
     padding: 10,
     margin: 10,
+    borderRadius: 20,
   },
   toggleButtonText: {
     color: 'white',
@@ -304,3 +294,4 @@ const styles = StyleSheet.create({
 });
 
 export default ShoppingCartApp;
+

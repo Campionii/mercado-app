@@ -64,13 +64,13 @@ const styles = StyleSheet.create({
   loginContainer: {
     width: '80%',
     alignItems: 'center',
-    marginTop: 250,
+    marginTop: 150,
   },
   title: {
     fontSize: 32,
     color: '#000',
     textAlign: 'center',
-    marginBottom: 10,
+    marginBottom: 30,
   },
   input: {
     width: '100%',

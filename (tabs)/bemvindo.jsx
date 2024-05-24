@@ -1,18 +1,25 @@
 import React from 'react';
 import { StyleSheet, Text, View, ImageBackground, Image, TouchableOpacity } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
+import { useNavigation } from '@react-navigation/native';
 
-export default function BemVindoScreen() {
+const BemVindoScreen = () => {
+  const navigation = useNavigation();
+
+  const goToIndexScreen = () => {
+    navigation.navigate('Index');
+  };
+
   return (
     <ImageBackground 
-      source={require('@/assets/images/bemvindo-velho.png')} // Ajuste o caminho conforme necessário
+      source={require('@/assets/images/bemvindo-velho.png')} 
       style={styles.background}
       resizeMode="cover"
     >
       <View style={styles.container}>
         <View style={styles.logoContainer}>
           <Image 
-            source={require('@/assets/images/Logo.png')} // Ajuste o caminho conforme necessário
+            source={require('@/assets/images/Logo.png')} 
             style={styles.logo}
           />
         </View>
@@ -20,7 +27,7 @@ export default function BemVindoScreen() {
           <Text style={styles.text}>Seja Bem-vindo{"\n"}ao App D'Avó</Text>
         </View>
         <StatusBar style="auto" />
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={goToIndexScreen}>
           <Text style={styles.buttonText}>Começar</Text>
         </TouchableOpacity>
       </View>
@@ -33,25 +40,25 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     height: '100%',
-    alignItems: 'center', // centraliza a logo horizontalmente
+    alignItems: 'center',
   },
   container: {
     flex: 1,
     paddingTop: 160,
-    justifyContent: 'center', // centraliza verticalmente todos os elementos dentro do container
-    alignItems: 'center', // centraliza horizontalmente todos os elementos dentro do container
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   logoContainer: {
     marginBottom: 10,
-    alignItems: 'center', // Adicionamos margem inferior para separar a imagem dos textos
+    alignItems: 'center',
   },
   logo: {
-    width: 150, // ajuste conforme necessário
-    height: 150, // ajuste conforme necessário
+    width: 150,
+    height: 150,
   },
   textContainer: {
-    flex: 1, // ocupa espaço disponível para que o container de texto possa ser centralizado verticalmente
-    justifyContent: 'center', // centraliza verticalmente o texto
+    flex: 1,
+    justifyContent: 'center',
   },
   text: {
     fontSize: 32,
@@ -71,3 +78,5 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
   },
 });
+
+export default BemVindoScreen;

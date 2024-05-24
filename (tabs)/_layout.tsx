@@ -10,37 +10,75 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        tabBarActiveTintColor: Colors[colorScheme ?? 'dark'].tint,
         headerShown: false,
       }}
     >
+
       <Tabs.Screen
         name="bemvindo"
         options={{
-          title: 'Home',
+          title: '',
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
+            <TabBarIcon name={focused ? 'caret-forward-circle' : 'caret-forward-circle-outline'} color={color} />
+          ),
+        }}
+      /><Tabs.Screen
+        name="login"
+        options={{
+          title: '',
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name={focused ? 'log-in' : 'log-in-outline'} color={color} />
           ),
         }}
       />
       <Tabs.Screen
+        name="Index"
+        options={{
+          title: '',
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name={focused ? 'bag' : 'bag-outline'} color={color} />
+          ),
+        }}
+      /><Tabs.Screen
         name="carrinho"
         options={{
-          title: 'Carrinho',
+          title: '',
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? 'cart' : 'cart-outline'} color={color} />
           ),
         }}
       />
+
       <Tabs.Screen
-        name="login"
+        name="cartao"
         options={{
-          title: 'Login',
+          title: '',
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name={focused ? 'card' : 'card-outline'} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="local"
+        options={{
+          title: '',
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name={focused ? 'navigate-circle' : 'navigate-circle-outline'} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="perfil"
+        options={{
+          title: '',
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? 'person-circle' : 'person-circle-outline'} color={color} />
           ),
         }}
       />
+
+
     </Tabs>
   );
 }
